@@ -17,6 +17,7 @@ import {
 } from '@nestjs/common';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
+import { UpdateBrandStatusDto } from './dto/update-status.dto';
 
 @Controller('brands')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
@@ -37,6 +38,14 @@ export class BrandController {
   @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateBrandDto) {
     return this.brandService.update(id, dto);
+  }
+
+  @Patch(':id/status')
+  changeStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateBrandStatusDto,
+  ) {
+    return this.brandService.changeStatus(id, dto.status);
   }
 
   @Delete(':id')
