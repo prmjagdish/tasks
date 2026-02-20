@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Brand } from './entities/brand.entity';
+import { BrandStatus } from '../../common/enums/brand-status.enum';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { User } from '../users/entities/user.entity';
@@ -60,5 +61,19 @@ export class BrandService {
     await this.brandRepo.remove(brand);
 
     return { message: 'Brand deleted successfully' };
+  }
+
+  async changeStatus(id: number, status: BrandStatus): Promise<Brand> {
+    const brand = await this.brandRepo.findOne({
+      where: { id },
+    });
+
+    if (!brand) {
+      throw new NotFoundException('Brand not found');
+    }
+
+    brand.status = status;
+
+    return await this.brandRepo.save(brand);
   }
 }

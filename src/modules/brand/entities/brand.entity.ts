@@ -9,6 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { BrandStatus } from '../../../common/enums/brand-status.enum';
 
 @Entity('brands')
 export class Brand {
@@ -23,6 +24,13 @@ export class Brand {
 
   @Column({ nullable: true })
   logoUrl?: string;
+
+  @Column({
+    type: 'enum',
+    enum: BrandStatus,
+    default: BrandStatus.DISAPPROVED,
+  })
+  status: BrandStatus;
 
   // Admin who created this brand
   @ManyToOne(() => User, { nullable: false })
