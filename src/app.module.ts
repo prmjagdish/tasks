@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BrandModule } from './modules/brand/brand.module';
+import { MailModule } from './common/mail/mail.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { BrandModule } from './modules/brand/brand.module';
         synchronize: false,
       }),
     }),
-
+    
+    MailModule,
     UsersModule,
     AuthModule,
     BrandModule,

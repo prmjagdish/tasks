@@ -14,9 +14,18 @@ export class UsersService {
     private userRepo: Repository<User>,
   ) {}
 
-  findByEmail(email: string) {
-    return this.userRepo.findOne({ where: { email } });
+  async findByEmail(email: string, includePassword = false) {
+  if (includePassword) {
+    return this.userRepo.findOne({
+      where: { email },
+      select: ['id', 'email', 'password', 'role'],
+    });
   }
+
+  return this.userRepo.findOne({
+    where: { email },
+  });
+}
 
   create(user: Partial<User>) {
     return this.userRepo.save(user);

@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUrl,
+  IsEmail,
+} from 'class-validator';
 
 export class CreateBrandDto {
   @IsString()
@@ -12,4 +18,8 @@ export class CreateBrandDto {
   @IsOptional()
   @IsUrl()
   logoUrl?: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 }
